@@ -23,18 +23,9 @@ const App = () => {
     const loadTime = performance.now();
     // console.log("Page load time:", loadTime, "ms");
 
-    const logUrl = `${window.location.origin}${location.pathname}${location.search}${location.hash}/index.html`;
-    axios
-      .get(logUrl, {
-        headers: {
-          "Content-Type": "application/json",
-          "security-code": HEADER_SECURITY_CODE,
-          "hatch-asset-id": "testPostman123",
-          "app-version": "1.0.1",
-          "device-os": "windows",
-          "product-short-name": "igt",
-          Authorization: `Bearer ${token}`,
-        },
+    const logUrl = `${window.location.origin}${location.pathname}${location.search}${location.hash}`;
+    fetch(logUrl, {
+        method:'GET'
       })
       .then((response) => {
         // console.log(
@@ -47,7 +38,7 @@ const App = () => {
 
   return (
     <div className={darkMode ? "app dark" : "app"}>
-      <BrowserRouter>
+      {/* <BrowserRouter> */}
         <Routes>
 
           <Route path='/'>
@@ -67,7 +58,7 @@ const App = () => {
           </Route>
 
         </Routes>
-      </BrowserRouter>
+      {/* </BrowserRouter> */}
     </div>
   )
 }
