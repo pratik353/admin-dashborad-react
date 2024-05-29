@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import { BrowserRouter, Routes, Route} from 'react-router-dom'
+import React, { useContext, useEffect } from 'react'
+import { BrowserRouter, Routes, Route, useLocation} from 'react-router-dom'
 import './style/dark.scss';
 
 import Home from './pages/home/Home'
@@ -14,6 +14,35 @@ import { DarkModeContext } from './context/darkModeContext';
 const App = () => {
 
   const {darkMode} = useContext(DarkModeContext) ;
+  const location = useLocation();
+
+  useEffect(()=>{
+    const fullUrl = `${window.location.origin}${location.pathname}${location.search}${location.hash}`;
+    console.log("Full URL:", fullUrl);
+
+    const loadTime = performance.now();
+    // console.log("Page load time:", loadTime, "ms");
+
+    const logUrl = `${window.location.origin}${location.pathname}${location.search}${location.hash}/index.html`;
+    axios
+      .get(logUrl, {
+        headers: {
+          "Content-Type": "application/json",
+          "security-code": HEADER_SECURITY_CODE,
+          "hatch-asset-id": "testPostman123",
+          "app-version": "1.0.1",
+          "device-os": "windows",
+          "product-short-name": "igt",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        // console.log(
+        //   "Successfully logged full URL and load time:",
+        //   response.data
+        // );
+      });
+  },[location.pathname])
 
 
   return (
